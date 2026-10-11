@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>합격킹 HSK | 화선쌤 속사포 0-3급 | HSK 3급 필수단어 [8]</title>
+<meta name="description" content="화선쌤 속사포 HSK 3급 필수단어 [8] 30문제 어휘테스트">
+<meta property="og:type" content="website"><meta property="og:title" content="합격킹 HSK | 화선쌤 속사포 0-3급 | HSK 3급 필수단어 [8]">
+<meta property="og:description" content="HSK 3급 필수단어 [8] · 30문제 · 중국어 발음 듣기 · 오답 복습">
+<meta property="og:url" content="https://hwasun03628-blip.github.io/hsk-3-08/">
+<meta name="theme-color" content="#163c70">
+<style>
+:root{font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif;color:#18304d;background:#eef4fc}
+*{box-sizing:border-box}body{margin:0}.wrap{max-width:760px;margin:auto;padding:18px 14px 70px}
+header{background:linear-gradient(125deg,#153b75,#3975ba);color:white;padding:28px 22px;border-radius:20px;margin-bottom:18px}
+header .brand{font-size:1.05rem;font-weight:800}header .sub{opacity:.9;margin-top:5px}h1{font-size:1.65rem;margin:16px 0 7px}
+.panel,.question{background:white;border-radius:16px;padding:20px;margin:14px 0;box-shadow:0 4px 18px #173f7810}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px}button{cursor:pointer;font:inherit;border-radius:10px;padding:10px 14px;border:1px solid #cbd8ea;background:white;color:#1d477d}
+button.primary{background:#185aa3;color:white;border-color:#185aa3;font-weight:750}
+button:hover{filter:brightness(.97)}button:focus-visible,input:focus-visible{outline:3px solid #ffb341;outline-offset:3px}
+.count{color:#52667d;font-size:.94rem}.hanzi{font-size:2.1rem;font-weight:800;color:#153b75;border:0;background:#edf5ff;margin:8px 0 15px;padding:10px 18px}
+.hanzi small{font-size:.8rem;vertical-align:middle}.options{display:grid;gap:9px}
+.option{display:flex;gap:10px;align-items:flex-start;border:1px solid #d5e0ed;border-radius:10px;padding:12px;cursor:pointer}
+.option:has(input:checked){border-color:#2367ae;background:#edf5ff}.option input{margin-top:4px;accent-color:#2367ae}
+.feedback{margin-top:12px;padding:12px;border-radius:10px;background:#fff1ee;color:#8b3026;line-height:1.65}
+.correct{border-left:5px solid #3e9c70}.wrong{border-left:5px solid #d66a5b}
+.result{font-size:1.15rem;font-weight:750}.muted{color:#62758b;font-size:.9rem}
+.history{display:grid;gap:8px}.historyItem{border:1px solid #d8e2ee;padding:12px;border-radius:10px}
+[hidden]{display:none!important}
+</style></head><body><main class="wrap">
+<header><div class="brand">합격킹 HSK</div><div class="sub">화선쌤 속사포 0-3급</div>
+<h1>HSK 3급 필수단어 [8]</h1><div>30문제 · 뜻 고르기 · 발음 듣기</div></header>
+<section class="panel"><div class="toolbar">
+<button type="button" id="historyBtn">이전 결과 다시 보기</button>
+<button type="button" id="wrongBtn">틀린 문제 다시 풀기</button>
+<button type="button" id="restartBtn">처음부터 다시 풀기</button>
+</div><p class="muted">한자를 누르면 발음을 들을 수 있습니다. 병음은 오답 채점 후에만 공개됩니다.</p>
+<div id="notice" class="muted" role="status"></div></section>
+<div id="quiz"></div><section class="panel" id="finish"><button type="button" class="primary" id="gradeBtn">채점하기</button>
+<div id="summary" aria-live="polite"></div></section>
+<section class="panel" id="historyPanel" hidden><h2>이전 결과</h2><div id="historyList" class="history"></div><button type="button" id="closeHistory">닫기</button></section>
+</main><script>
+"use strict";
+const WORDS=[{"hanzi": "树", "pinyin": "shù", "meaning": "[명] 나무", "speech": "树"}, {"hanzi": "数学", "pinyin": "shùxué", "meaning": "[명] 수학", "speech": "数学"}, {"hanzi": "刷牙", "pinyin": "shuāyá", "meaning": "[동] 양치질하다", "speech": "刷牙"}, {"hanzi": "水平", "pinyin": "shuǐpíng", "meaning": "[명] 수준, 실력", "speech": "水平"}, {"hanzi": "提高", "pinyin": "tígāo", "meaning": "[동] 높이다, 향상시키다", "speech": "提高"}, {"hanzi": "说话", "pinyin": "shuōhuà", "meaning": "[동] 말을 하다", "speech": "说话"}, {"hanzi": "太阳", "pinyin": "tàiyáng", "meaning": "[명] 태양, 해", "speech": "太阳"}, {"hanzi": "月亮", "pinyin": "yuèliang", "meaning": "[명] 달", "speech": "月亮"}, {"hanzi": "糖", "pinyin": "táng", "meaning": "[명] 설탕, 사탕", "speech": "糖"}, {"hanzi": "疼", "pinyin": "téng", "meaning": "[형] 아프다", "speech": "疼"}, {"hanzi": "(问)题", "pinyin": "(wèn)tí", "meaning": "[명] 문제, 질문", "speech": "问题"}, {"hanzi": "体育", "pinyin": "tǐyù", "meaning": "[명] 체육, 스포츠", "speech": "体育"}, {"hanzi": "天气", "pinyin": "tiānqì", "meaning": "[명] 날씨", "speech": "天气"}, {"hanzi": "甜", "pinyin": "tián", "meaning": "[형] 달다", "speech": "甜"}, {"hanzi": "同意", "pinyin": "tóngyì", "meaning": "[동] 동의하다", "speech": "同意"}, {"hanzi": "头发", "pinyin": "tóufà", "meaning": "[명] 머리카락", "speech": "头发"}, {"hanzi": "腿", "pinyin": "tuǐ", "meaning": "[명] 다리", "speech": "腿"}, {"hanzi": "完", "pinyin": "wán", "meaning": "[동] 완료하다", "speech": "完"}, {"hanzi": "完成", "pinyin": "wánchéng", "meaning": "[동] 완성하다, 완수하다", "speech": "完成"}, {"hanzi": "玩(儿)", "pinyin": "wán(r)", "meaning": "[동] 놀다", "speech": "玩儿"}, {"hanzi": "碗", "pinyin": "wǎn", "meaning": "[명] 그릇", "speech": "碗"}, {"hanzi": "忘记", "pinyin": "wàngjì", "meaning": "[동] 잊다, 잊어버리다", "speech": "忘记"}, {"hanzi": "喂", "pinyin": "wéi", "meaning": "[감] 여보세요", "speech": "喂"}, {"hanzi": "味道", "pinyin": "wèidào", "meaning": "[명] 맛", "speech": "味道"}, {"hanzi": "文化", "pinyin": "wénhuà", "meaning": "[명] 문화", "speech": "文化"}, {"hanzi": "问", "pinyin": "wèn", "meaning": "[동] 묻다, 질문하다", "speech": "问"}, {"hanzi": "温度", "pinyin": "wēndù", "meaning": "[명] 온도", "speech": "温度"}, {"hanzi": "希望", "pinyin": "xīwàng", "meaning": "[명/동] 희망(하다), 바라다", "speech": "希望"}, {"hanzi": "习惯", "pinyin": "xíguàn", "meaning": "[명/동] 습관(이 되다), 익숙해지다", "speech": "习惯"}, {"hanzi": "洗", "pinyin": "xǐ", "meaning": "[동] 씻다", "speech": "洗"}];
+const STORAGE="hsk-3-08-history-v1";
+const $=id=>document.getElementById(id);
+const shuffle=a=>{let b=[...a];for(let i=b.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b};
+let active=[],selected={},graded=false,lastWrong=[];
+function speak(word){
+ if(!("speechSynthesis" in window)){alert("이 브라우저는 음성 읽기를 지원하지 않습니다.");return}
+ speechSynthesis.cancel();
+ let u=new SpeechSynthesisUtterance(word.speech);
+ u.lang="zh-CN";u.rate=.85;
+ const voices=speechSynthesis.getVoices();
+ const chinese=voices.find(v=>v.lang.toLowerCase().startsWith("zh"));
+ if(chinese)u.voice=chinese;
+ speechSynthesis.speak(u);
+}
+function makeOptions(word){
+ const other=shuffle(WORDS.filter(w=>w.hanzi!==word.hanzi && w.meaning!==word.meaning)).slice(0,3);
+ return shuffle([word,...other]).map(w=>w.meaning);
+}
+function el(tag,cls,txt){const x=document.createElement(tag);if(cls)x.className=cls;if(txt!==undefined)x.textContent=txt;return x}
+function start(items=WORDS){
+ active=shuffle(items).map(w=>({...w,options:makeOptions(w)}));
+ selected={};graded=false;lastWrong=[];
+ $("quiz").replaceChildren();$("summary").replaceChildren();$("gradeBtn").hidden=false;
+ active.forEach((w,i)=>{
+ const q=el("section","question");q.dataset.index=i;
+ q.append(el("div","count",`${i+1} / ${active.length}`));
+ const sound=el("button","hanzi");sound.type="button";sound.setAttribute("aria-label",w.hanzi+" 발음 듣기");
+ sound.append(document.createTextNode(w.hanzi+" "));sound.append(el("small",null,"🔊"));sound.addEventListener("click",()=>speak(w));q.append(sound);
+ const opts=el("div","options");
+ w.options.forEach((meaning,j)=>{
+ const label=el("label","option"),input=el("input");input.type="radio";input.name="q"+i;input.value=meaning;
+ input.addEventListener("change",()=>selected[i]=meaning);
+ label.append(input,el("span",null,meaning));opts.append(label);
+ });
+ q.append(opts);$("quiz").append(q);
+ });
+ $("notice").textContent=`총 ${active.length}문제 · 순서는 무작위입니다.`;
+ window.scrollTo({top:0,behavior:"instant"});
+}
+function historyRead(){try{return JSON.parse(localStorage.getItem(STORAGE)||"[]")}catch{return []}}
+function grade(){
+ if(graded)return;
+ const unanswered=active.filter((_,i)=>selected[i]===undefined).length;
+ if(unanswered&&!confirm(`아직 ${unanswered}문제를 풀지 않았습니다. 채점할까요?`))return;
+ graded=true;let correct=0;lastWrong=[];
+ active.forEach((w,i)=>{
+ const ok=selected[i]===w.meaning,q=$("quiz").children[i];
+ if(ok){correct++;q.classList.add("correct")}else{
+ lastWrong.push(w.hanzi);q.classList.add("wrong");
+ const f=el("div","feedback");f.append(el("strong",null,"오답 · 정답 확인"));
+ f.append(el("div",null,"병음: "+w.pinyin),el("div",null,"뜻: "+w.meaning));q.append(f);
+ }
+ q.querySelectorAll("input").forEach(x=>x.disabled=true);
+ });
+ const result={date:new Date().toLocaleString("ko-KR"),correct,total:active.length,wrong:lastWrong};
+ try{localStorage.setItem(STORAGE,JSON.stringify([result,...historyRead()].slice(0,30)))}catch{}
+ $("summary").replaceChildren(el("p","result",`채점 결과: ${correct} / ${active.length}문제 정답 (${Math.round(correct/active.length*100)}점)`),
+ el("p","muted",`틀린 문제 ${lastWrong.length}개 · 결과가 이 브라우저에 저장되었습니다.`));
+ $("gradeBtn").hidden=true;
+ $("summary").scrollIntoView({behavior:"smooth",block:"center"});
+}
+function showHistory(){
+ const panel=$("historyPanel"),list=$("historyList");list.replaceChildren();
+ const history=historyRead();
+ if(!history.length)list.append(el("p","muted","저장된 결과가 없습니다."));
+ history.forEach((r,i)=>{
+ const item=el("div","historyItem");
+ item.append(el("strong",null,`${r.date} · ${r.correct}/${r.total} 정답`));
+ item.append(el("div","muted",`틀린 단어: ${r.wrong.length?r.wrong.join(", "):"없음"}`));
+ const b=el("button",null,"이 결과의 오답 다시 풀기");b.type="button";b.disabled=!r.wrong.length;
+ b.addEventListener("click",()=>{panel.hidden=true;start(WORDS.filter(w=>r.wrong.includes(w.hanzi)))});
+ item.append(b);list.append(item);
+ });
+ panel.hidden=false;panel.scrollIntoView({behavior:"smooth"});
+}
+$("gradeBtn").addEventListener("click",grade);
+$("historyBtn").addEventListener("click",showHistory);
+$("closeHistory").addEventListener("click",()=>$("historyPanel").hidden=true);
+$("wrongBtn").addEventListener("click",()=>{
+ if(!graded){$("notice").textContent="먼저 채점하기를 눌러 주세요.";return}
+ if(!lastWrong.length){$("notice").textContent="틀린 문제가 없습니다!";return}
+ start(WORDS.filter(w=>lastWrong.includes(w.hanzi)));
+});
+$("restartBtn").addEventListener("click",()=>start());
+start();
+</script></body></html>
